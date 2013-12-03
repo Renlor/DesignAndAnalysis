@@ -7,10 +7,12 @@ package Project4;
 public class EditDistance {
 
     public static void main(String args[]) {
-        String s1 = "sandy";
-        String s2 = "sand";
-        int[] a = Distance(s1, s2);
-        System.out.println("String1:" + s1 + " String2:" + s2 + " insertions: " + a[0] + " deletions: " + a[1] + " replacements: " + a[2]);
+        String[] s1 = {"sandy", "froze", "optimal", "chess"};
+        String[] s2 = {"sand", "frozen", "optimum", "hodges"};
+        for (int i = 0; i < s1.length; i++) {
+            int[] a = Distance(s1[i], s2[i]);
+            System.out.println("String1:" + s1[i] + " String2:" + s2[i] + " insertions: " + a[0] + " deletions: " + a[1] + " replacements: " + a[2]);
+        }
     }
 
     public static int[] Distance(String s1, String s2) {
@@ -37,7 +39,7 @@ public class EditDistance {
         }
         int i = set1.length;
         int j = set2.length;
-        while (i > 0 || j > 0) {
+        while (i > 0 && j > 0) {
             if (result[i - 1][j - 1] <= result[i][j - 1]) {
                 if (result[i - 1][j - 1] <= result[i - 1][j]) {
                     if (result[i][j] > result[i - 1][j - 1]) {
@@ -54,7 +56,7 @@ public class EditDistance {
             } else {
                 if (result[i][j - 1] < result[i - 1][j]) {
                     if (result[i][j] > result[i][j - 1]) {
-                        insertions++;
+                        deletions++;
                     }
                     j--;
                 } else {
@@ -65,14 +67,16 @@ public class EditDistance {
                 }
             }
         }
+        deletions += i;
+        insertions += j;
 
-        System.out.println();
-        for (i = 0; i < result.length; i++) {
-            for (j = 0; j < result[i].length; j++) {
-                System.out.print(result[i][j] + " | ");
-            }
-            System.out.println();
-        }
+        /*System.out.println();
+         for (i = 0; i < result.length; i++) {
+         for (j = 0; j < result[i].length; j++) {
+         System.out.print(result[i][j] + " | ");
+         }
+         System.out.println();
+         }*/
         return new int[]{insertions, deletions, replacements};
     }
 }
